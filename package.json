@@ -1,0 +1,29 @@
+{
+  "name": "tree-sitter-latte",
+  "version": "0.0.1",
+  "description": "Latte grammar for tree-sitter",
+  "main": "bindings/node",
+  "keywords": [
+    "parser",
+    "lexer",
+    "tree-sitter",
+    "grammar",
+    "latte"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daun/tree-sitter-latte.git"
+  },
+  "scripts": {
+    "generate": "./node_modules/.bin/tree-sitter generate",
+    "test": "./node_modules/.bin/tree-sitter test"
+  },
+  "author": "Philipp Daun",
+  "license": "MIT",
+  "dependencies": {
+    "nan": "^2.17.0"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.20.8"
+  }
+}
