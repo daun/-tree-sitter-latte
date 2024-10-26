@@ -1,5 +1,5 @@
 ===================================
-Test
+Main
 ===================================
 
 Lorem ipsum
@@ -33,72 +33,70 @@ Lorem ipsum
 
 (template
   (content)
-  (output_directive
+  (tag
     (variable)
     (filters
       (filter
         (filter_identifier)
         (arguments
           (argument
-            (argument_value
-              (string)))
+            (string))
           (argument
-            (argument_value
-              (boolean)))))
+            (boolean))))
       (filter
         (filter_identifier))))
   (content)
   (comment)
-  (statement_directive
+  (tag
     (block_statement
-      (tag)
-      (unquoted_string)
-      (filters
-        (filter
-          (filter_identifier)))))
+      (keyword)
+      (unquoted_string))
+    (filters
+      (filter
+        (filter_identifier))))
   (content)
-  (output_directive
+  (tag
     (variable))
   (content)
-  (statement_directive
+  (tag
     (closing_statement
-      (tag)))
-  (statement_directive
+      (keyword)))
+  (tag
     (include_statement
-      (tag)
+      (keyword)
       (string)
       (argument
         (string))))
   (content)
-  (statement_directive
+  (tag
     (foreach_statement
       (repeat)
       (variable)
       (keyword)
       (variable)
       (variable)))
-  (output_directive
+  (tag
     (variable))
   (content)
-  (output_directive
+  (tag
     (variable))
-  (statement_directive
+  (tag
     (if_statement
       (conditional_branch)))
   (content)
-  (output_directive
+  (tag
     (variable))
-  (statement_directive
+  (tag
     (closing_statement
       (repeat_end)))
-  (statement_directive
+  (tag
     (if_statement
       (conditional)
       (ERROR
         (boolean))
       (variable)))
   (content)
-  (output_directive
+  (tag
     (variable)
     (ERROR)
     (filters
@@ -106,27 +104,27 @@ Lorem ipsum
         (filter_identifier)))
     (ERROR
       (UNEXPECTED '&')))
-  (statement_directive
+  (tag
     (if_statement
       (conditional_branch)
       (variable)))
   (content)
-  (output_directive
+  (tag
     (binary_expression
       (variable)
       (operator)
       (string)))
-  (statement_directive
+  (tag
     (if_statement
       (conditional_branch)))
-  (statement_directive
+  (tag
     (if_statement
       (conditional)
       (boolean)))
   (content)
-  (statement_directive
+  (tag
     (closing_statement
       (conditional_end)))
-  (statement_directive
+  (tag
     (closing_statement
       (conditional_end))))

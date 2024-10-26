@@ -1,0 +1,52 @@
+===================================
+Include
+===================================
+
+{include './test.latte'}
+
+-----------------------------------
+
+(template
+  (tag
+    (include_statement
+      (keyword)
+      (string)))
+  (content))
+
+===================================
+Include with arg
+===================================
+
+{include './test.latte', arg: 123}
+
+-----------------------------------
+
+(template
+  (tag
+    (include_statement
+      (keyword)
+      (string))
+    (arguments
+      (argument)
+        (number)))
+  (content))
+
+===================================
+Include with args
+===================================
+
+{include './test.latte', arg: 123, string: 'test'}
+
+-----------------------------------
+
+(template
+  (tag
+    (include_statement
+      (keyword)
+      (string))
+    (arguments
+      (argument)
+      (number)
+      (argument)
+      (string)))
+  (content))

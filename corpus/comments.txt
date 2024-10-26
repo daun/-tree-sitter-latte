@@ -1,0 +1,59 @@
+===================================
+Inline comments
+===================================
+
+Lorem {* ipsum *} dolor sit amet,
+consectetur adipiscing elit,
+{*sed*} do eiusmod tempor incididunt
+ut labore et dolore magna aliqua.
+
+-----------------------------------
+
+(template
+  (content)
+  (comment)
+  (content)
+  (comment)
+  (content))
+
+===================================
+Block comments
+===================================
+
+Lorem {* ipsum dolor sit amet,
+consectetur adipiscing elit,
+sed*} do eiusmod tempor incididunt
+ut labore et dolore magna aliqua.
+
+-----------------------------------
+
+(template
+  (content)
+  (comment)
+  (content))
+
+===================================
+Comments with tags
+===================================
+
+Lorem {* {snake} *} ipsum dolor sit amet
+
+-----------------------------------
+
+(template
+  (content)
+  (comment)
+  (content))
+
+===================================
+Comments with asterisks
+===================================
+
+Lorem {* some * thing *} ipsum dolor sit amet
+
+-----------------------------------
+
+(template
+  (content)
+  (comment)
+  (content))

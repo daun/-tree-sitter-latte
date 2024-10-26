@@ -1,0 +1,90 @@
+===================================
+Block
+===================================
+
+{block test}
+  Lorem ipsum
+{/block}
+
+---
+
+(template
+  (tag
+    (block_statement
+      (keyword)
+      (unquoted_string)))
+  (content)
+  (tag
+    (closing_statement
+      (keyword)))
+  (content))
+
+===================================
+Block with surrounding content
+===================================
+
+Lorem ipsum
+{block test} Lorem ipsum {/block}
+Dolor sit amet
+
+---
+
+(template
+  (content)
+  (tag
+    (block_statement
+      (keyword)
+      (unquoted_string)))
+  (content)
+  (tag
+    (closing_statement
+      (keyword)))
+  (content))
+
+===================================
+Block with filters
+===================================
+
+{block test|noescape}
+  Lorem ipsum
+{/block}
+
+---
+
+(template
+  (tag
+    (block_statement
+      (keyword)
+      (unquoted_string))
+    (filters
+      (filter
+        (filter_identifier))))
+  (content)
+  (tag
+    (closing_statement
+      (keyword)))
+  (content))
+
+===================================
+Block with nested tags
+===================================
+
+{block test}
+  Lorem {$test} ipsum
+{/block}
+
+---
+
+(template
+  (tag
+    (block_statement
+      (keyword)
+      (unquoted_string)))
+  (content)
+  (tag
+    (variable))
+  (content)
+  (tag
+    (closing_statement
+      (keyword)))
+  (content))
