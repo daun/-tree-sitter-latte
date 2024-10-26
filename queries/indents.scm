@@ -1,18 +1,14 @@
 [
- (if)
- (foreach)
- (block)
+ (conditional)
+ (repeat)
 ] @indent.begin
 
 [
- (else_if)
- (else)
+ (conditional_branch)
 ] @indent.branch
 
 [
- "{/if}"
- "{/foreach}"
- "{/block}"
+  (conditional_end)
 ] @indent.end
 
 (ERROR) @indent.auto

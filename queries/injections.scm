@@ -1,3 +1,3 @@
-((text) @injection.content
-  (#set! injection.combined)
-  (#set! injection.language "html"))
+((content) @injection.content
+  (#set! injection.language "html")
+  (#set! injection.combined))

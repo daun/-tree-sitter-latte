@@ -1,92 +1,132 @@
 ===================================
 Test
 ===================================
-Text
-{$test|implode:'.':true|print_r} Test
+
+Lorem ipsum
+
+{$test|implode:'.',true|noescape} Dolor sit amet
+
 {* comment *}
-{block name='test'}
-  Test
-  {$test}
+
+{block test|noescape}
+  Lorem {$test} ipsum
 {/block}
-{include test='true' file='test' string=    'halllo'}
-Text
+
+{include './test.latte' string:    'hello'}
+
+Lorem ipsum
+
 {foreach $test as $key => $value}
-  {$key}:{$value}
+  {$key}: {$value}
 {else}
-  no results
-  {$hallo}
+  Nothing here {$something}
 {/foreach}
-{if true}
-  {$hallo}
-  Test
+
+{if true || $result}
+  Very true {$result || false && true}
 {elseif $test}
-  Hier steht was
+  Hier steht was {$test ?? ''}
 {else}
-  {if false}
-    Hi
-  {/if}
+  {if false} Hi {/if}
 {/if}
 ---
 
 (template
-  (text)
-  (inline
-    (php)
-    (modifier
-      (parameter)
-      (parameter)
-    )
-    (modifier)
-  )
-  (text)
+  (content)
+  (output_directive
+    (variable)
+    (filters
+      (filter
+        (filter_identifier)
+        (arguments
+          (argument
+            (argument_value
+              (string)))
+          (argument
+            (argument_value
+              (boolean)))))
+      (filter
+        (filter_identifier))))
+  (content)
   (comment)
-  (block
-    (parameter)
-    (body
-      (text)
-      (inline (php))
-    )
-  )
-  (include
-    (parameter)
-    (parameter)
-    (parameter)
-  )
-  (text)
-  (foreach
-    body: (body
-      (inline (php))
-      (text)
-      (inline (php))
-    )
-    alternative: (else
-      body: (body
-        (text)
-        (inline (php))
-      )
-    )
-  )
-  (if
-    condition: (text)
-    body: (body
-      (inline (php))
-      (text)
-    )
-    alternative: (else_if
-      condition: (text)
-      body: (body
-        (text)
-      )
-    )
-    alternative: (else
-      body: (body
-        (if
-          condition: (text)
-          body: (body
-            (text)
-          )
-        )
-      )
-    )
-  )
-)
+  (statement_directive
+    (block_statement
+      (tag)
+      (unquoted_string)
+      (filters
+        (filter
+          (filter_identifier)))))
+  (content)
+  (output_directive
+    (variable))
+  (content)
+  (statement_directive
+    (closing_statement
+      (tag)))
+  (statement_directive
+    (include_statement
+      (tag)
+      (string)
+      (argument
+        (string))))
+  (content)
+  (statement_directive
+    (foreach_statement
+      (repeat)
+      (variable)
+      (keyword)
+      (variable)
+      (variable)))
+  (output_directive
+    (variable))
+  (content)
+  (output_directive
+    (variable))
+  (statement_directive
+    (if_statement
+      (conditional_branch)))
+  (content)
+  (output_directive
+    (variable))
+  (statement_directive
+    (closing_statement
+      (repeat_end)))
+  (statement_directive
+    (if_statement
+      (conditional)
+      (ERROR
+        (boolean))
+      (variable)))
+  (content)
+  (output_directive
+    (variable)
+    (ERROR)
+    (filters
+      (filter
+        (filter_identifier)))
+    (ERROR
+      (UNEXPECTED '&')))
+  (statement_directive
+    (if_statement
+      (conditional_branch)
+      (variable)))
+  (content)
+  (output_directive
+    (binary_expression
+      (variable)
+      (operator)
+      (string)))
+  (statement_directive
+    (if_statement
+      (conditional_branch)))
+  (statement_directive
+    (if_statement
+      (conditional)
+      (boolean)))
+  (content)
+  (statement_directive
+    (closing_statement
+      (conditional_end)))
+  (statement_directive
+    (closing_statement
+      (conditional_end))))
