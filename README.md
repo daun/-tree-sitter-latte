@@ -1,3 +1,3 @@
-# Latte Tree-Sitter
+# tree-sitter-latte
 
-Tree-sitter grammar for the Latte templating language.
+A [Latte](https://latte.nette.org/) grammar for [tree-sitter](https://github.com/tree-sitter/tree-sitter).

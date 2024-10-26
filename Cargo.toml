@@ -1,11 +1,11 @@
 [package]
 name = "tree-sitter-latte"
 description = "latte grammar for the tree-sitter parsing library"
-version = "0.0.1"
-keywords = ["incremental", "parsing", "latte"]
+version = "0.1.0"
+keywords = ["tree-sitter", "grammar", "latte"]
 categories = ["parsing", "text-editors"]
-repository = "https://github.com/tree-sitter/tree-sitter-latte"
-edition = "2018"
+repository = "https://github.com/daun/tree-sitter-latte"
+edition = "2024"
 license = "MIT"
 
 build = "bindings/rust/build.rs"
