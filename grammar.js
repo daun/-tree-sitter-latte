@@ -9,46 +9,44 @@ module.exports = grammar({
 
   conflicts: ($) => [[$.binary_operator, $.unary_operator]],
 
-  extras: ($) => [$.comment, /[\s\u00A0\u200B\u2060\uFEFF]/],
+  extras: ($) => [$.comment, /\s+/],
 
-  // inline: ($) => [$._variable, $._namespace_use_type],
-
-  // supertypes: ($) => [$.statement, $.expression, $.primary_expression, $.type, $.literal],
-
-  // word: ($) => $.name,
+  inline: ($) => [$.argument],
 
   rules: {
-    template: ($) =>
-      repeat(choice($.statement_directive, $.output_directive, $.comment, $.content)),
+    template: ($) => repeat(choice($.tag, $.comment, $.content)),
 
     content: () => prec.right(repeat1(/[^\{]+|\{/)),
 
-    comment: () => seq("{*", /[^*]*\*+([^\}*][^*]*\*+)*/, "}"),
+    comment: () => seq("{*", repeat(choice(/[^*]/, /\*[^}]/)), "*}"),
 
-    statement_directive: ($) => seq("{", $._statement, "}"),
+    variable: ($) => seq("$", $._name),
 
-    output_directive: ($) => seq("{", $._expression, optional($.filters), "}"),
-
-    variable_name: ($) => seq("$", $._name),
+    tag: ($) => seq("{", $._statement, "}"),
 
     _statement: ($) =>
       choice(
         $.closing_statement,
-        $.assignment_statement,
-        $.for_statement,
-        $.foreach_statement,
-        $.if_statement,
-        $.import_statement,
-        $.from_statement,
-        $.include_statement,
-        $.block_statement,
-        $.generic_tag_statement,
+        seq(
+          choice(
+            $.assignment_statement,
+            $.for_statement,
+            $.foreach_statement,
+            $.if_statement,
+            $.include_statement,
+            $.block_statement,
+            $.generic_tag_statement,
+            prec(-1, $._expression),
+          ),
+          optional($.arguments),
+          optional($.filters),
+        ),
       ),
 
     assignment_statement: ($) =>
       seq(
         alias(choice("var", "default"), $.keyword),
-        alias($.variable_name, $.variable),
+        alias($.variable, $.variable),
         optional(seq("=", $._expression)),
       ),
 
@@ -57,9 +55,6 @@ module.exports = grammar({
         alias("for", $.repeat),
         seq(alias($._expression, $.variable), repeat(seq(";", alias($._expression, $.variable)))),
       ),
-
-    generic_tag_statement: ($) =>
-      seq(alias($._name, $.tag), optional($._expression), optional($.filters)),
 
     foreach_statement: ($) =>
       seq(
@@ -85,42 +80,24 @@ module.exports = grammar({
         choice(
           alias("if", $.conditional_end),
           alias("foreach", $.repeat_end),
-          alias($._name, $.tag),
+          alias($._name, $.keyword),
         ),
       ),
 
     include_statement: ($) =>
       seq(
-        alias(choice("include", "embed"), $.tag),
+        alias(choice("include", "embed"), $.keyword),
         optional(alias("block", $.attribute)),
-        choice($.variable_name, $._string),
-        optional($.argument),
+        choice($.variable, $._string),
       ),
 
-    block_statement: ($) =>
-      seq(alias("block", $.tag), choice($.variable_name, $._string), optional($.filters)),
+    block_statement: ($) => seq(alias("block", $.keyword), choice($.variable, $._string)),
 
-    import_statement: ($) =>
-      seq(alias("import", $.tag), $._expression, alias("as", $.keyword), alias($._name, $.name)),
-
-    from_statement: ($) =>
-      seq(
-        alias("from", $.tag),
-        $._expression,
-        alias("import", $.keyword),
-        alias($._name, $.name),
-        optional(
-          seq(
-            alias("as", $.keyword),
-            alias($._name, $.name),
-            repeat(seq(",", alias($._name, $.name))),
-          ),
-        ),
-      ),
+    generic_tag_statement: ($) => seq(alias($._name, $.keyword), optional($._expression)),
 
     _expression: ($) =>
       choice(
-        alias($.variable_name, $.variable),
+        alias($.variable, $.variable),
         $._literal,
         seq("(", $._expression, optional($.filters), ")"),
         $.unary_expression,
@@ -154,27 +131,18 @@ module.exports = grammar({
 
     array: ($) => seq("[", optional(seq($._expression, repeat(seq(",", $._expression)))), "]"),
 
-    argument: ($) => seq(REGEX_NAME, choice("=>", ":"), $._expression),
+    arguments: ($) => repeat1(seq(",", $.argument)),
 
-    filters: ($) => seq("|", $.filter, optional(repeat(seq("|", $.filter)))),
+    argument: ($) => seq(alias($._name, $.argument), choice("=>", ":"), $._expression),
+
+    filters: ($) => repeat1(seq("|", $.filter)),
 
     filter: ($) =>
       prec.left(
-        seq(alias($._name, $.filter_identifier), optional(alias($.filter_arguments, $.arguments))),
+        seq(alias($._name, $.filter_name), optional(alias($.filter_arguments, $.arguments))),
       ),
 
-    filter_arguments: ($) =>
-      seq(
-        ":",
-        optional(
-          seq(
-            alias($.filter_argument, $.argument),
-            repeat(seq(",", alias($.filter_argument, $.argument))),
-          ),
-        ),
-      ),
-
-    filter_argument: ($) => alias($._expression, $.argument_value),
+    filter_arguments: ($) => seq(":", seq($._expression, repeat(seq(",", $._expression)))),
 
     binary_expression: ($) =>
       prec.right(seq($._expression, seq(alias($.binary_operator, $.operator), $._expression))),
